@@ -62,6 +62,8 @@ export function setLogin (){
 async function usuarioExiste() {
 
     let existeUsuario;
+    let nombre;
+    let imagen;
     const spinner = document.querySelector('#spinner');
 
     await usuariosServices.listar( )
@@ -69,6 +71,8 @@ async function usuarioExiste() {
             respuesta.forEach(usuario => {
                 
                 if (usuario.correo === inputEmail.value && usuario.password === inputPassword.value) {
+                    nombre = usuario.nombre + " " + usuario.apellido
+                    imagen = usuario.avatar
                     return existeUsuario = true;
                 } else {
                     return;
@@ -85,6 +89,10 @@ async function usuarioExiste() {
         document.getElementById("sitio").classList.remove('d-none');
         setUsuarioAutenticado(true); 
         window.location.href = "#/home" ;
+        let name = document.getElementById("nombreUserMenu") 
+        name.innerHTML = nombre
+        let image = document.getElementById("imgUserMenu") 
+        image.src = imagen
     }
 }
 
