@@ -48,7 +48,7 @@ async function borrar(id){
        })
 }
 
-export const categoriasServicios = {
+export const ventasServices = {
     listar,
     crear,
     editar,

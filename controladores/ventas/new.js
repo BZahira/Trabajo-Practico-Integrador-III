@@ -1,4 +1,4 @@
-import { ventasServicios } from "/servicios/ventas-servicios.js";
+import { ventasServices } from "/servicios/ventas-servicios.js";
 
 
 const htmlAmCategorias = `
