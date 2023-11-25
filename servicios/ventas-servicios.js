@@ -53,7 +53,6 @@ async function borrar(id){
        })
 }
 
-<<<<<<< HEAD
 async function listarVentasDespachadas(despachadas) {
     const newUrl= new URL(url);
     newUrl.searchParams.append('despachado', despachadas);
@@ -63,9 +62,6 @@ async function listarVentasDespachadas(despachadas) {
 }
 
 export const ventasServicios = {
-=======
-export const ventasServices = {
->>>>>>> 5188b1f56ccf0cfb75a06a0c4e64cf36da89cc11
     listar,
     crear,
     editar,
