@@ -1,4 +1,4 @@
-import { categoriasServicios } from "../../servicios/categorias-servicios.js";
+import {  categoriasServices } from "../../servicios/categorias-servicios.js";
 import { newRegister } from "./new.js";
 import { editRegister } from "./new.js";
 
@@ -38,7 +38,7 @@ export async function Categorias(){
     d.querySelector('.rutaMenu').setAttribute('href',"#/categorias");
     let cP =d.getElementById('contenidoPrincipal');
     
-    res = await categoriasServicios.listar();
+    res = await  categoriasServices.listar();
     res.forEach(element => {
       element.action = "<div class='btn-group'><a class='btn btn-warning btn-sm mr-1 rounded-circle btnEditarCategoria'  href='#/editCategoria' data-idCategoria='"+ element.id +"'> <i class='fas fa-pencil-alt'></i></a><a class='btn btn-danger btn-sm rounded-circle removeItem btnBorrarCategoria'href='#/delCategoria' data-idCategoria='"+ element.id +"'><i class='fas fa-trash'></i></a></div>";
     });  
@@ -89,7 +89,7 @@ async function borrar(){
         }
       })
       if (borrar === 1)
-            await categoriasServicios.borrar(id); 
+            await  categoriasServices.borrar(id); 
       window.location.href = "#/categorias";  
 }
 

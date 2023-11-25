@@ -1,6 +1,5 @@
-const url = "https://65529c9e5c69a779032a33ea.mockapi.io/sales";
+const url = "https://65529c9e5c69a779032a33ea.mockapi.io/product";
 
-//API-REST VENTAS/
 
 async function listar(id) {
     let cadUrl;
@@ -12,7 +11,7 @@ async function listar(id) {
         .then(respuesta => respuesta.json());
 }
 
-async function crear(idUsuario, emailUsuario, idProducto, nombreProducto, cantidad, fecha, despachado) {
+async function crear(nombre, categoria, descripcion, foto, precio, idCategoria) {
 
     return await fetch(url, {
         method: 'POST',
@@ -20,18 +19,17 @@ async function crear(idUsuario, emailUsuario, idProducto, nombreProducto, cantid
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            idUsuario: idUsuario, 
-            emailUsuario: emailUsuario, 
-            idProducto: idProducto, 
-            nombreProducto: nombreProducto, 
-            cantidad: cantidad, 
-            fecha: fecha, 
-            despachado: despachado
+            nombre: nombre,
+            categoria: categoria,
+            descripcion: descripcion,
+            foto: foto,
+            precio: precio,
+            idCategoria: idCategoria
         })
     })
 }
 
-async function editar(id,  despachado) {
+async function editar(id, nombre, categoria, descripcion, foto, precio, idCategoria) {
 
     let urlPut = url + "/" + id;
     return await fetch(urlPut, {
@@ -40,7 +38,12 @@ async function editar(id,  despachado) {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            despachado: despachado
+            nombre: nombre,
+            categoria: categoria,
+            descripcion: descripcion,
+            foto: foto,
+            precio: precio,
+            idCategoria: idCategoria
         })
     })
 }
@@ -53,22 +56,17 @@ async function borrar(id){
        })
 }
 
-<<<<<<< HEAD
-async function listarVentasDespachadas(despachadas) {
+async function listarPorCategoria(idCategoria) {
     const newUrl= new URL(url);
-    newUrl.searchParams.append('despachado', despachadas);
+    newUrl.searchParams.append('idCategoria', idCategoria);
     return await fetch(newUrl)
         .then(respuesta => respuesta.json());
  
 }
-
-export const ventasServicios = {
-=======
-export const ventasServices = {
->>>>>>> 5188b1f56ccf0cfb75a06a0c4e64cf36da89cc11
+export const productosServices = {
     listar,
     crear,
     editar,
     borrar,
-    listarVentasDespachadas
+    listarPorCategoria
 }

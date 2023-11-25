@@ -1,4 +1,4 @@
-import { categoriasServicios } from "/servicios/categorias-servicios.js";
+import {  categoriasServices } from "/servicios/categorias-servicios.js";
 
 
 const htmlAmCategorias = `
@@ -82,7 +82,7 @@ export async function editRegister(id){
 
     formulario = d.querySelector(".frmAmCategoria")
     formulario.addEventListener("submit", modificar);
-    let categoria =  await categoriasServicios.listar(id);
+    let categoria =  await  categoriasServices.listar(id);
 
     
     txtNombre.value= categoria.nombre;
@@ -110,7 +110,7 @@ function guardar(e) {
    
     e.preventDefault();
    
-    categoriasServicios.crear(txtNombre.value)
+     categoriasServices.crear(txtNombre.value)
         .then(respuesta => {
 
             formulario.reset();
@@ -125,7 +125,7 @@ function modificar(e) {
    
     e.preventDefault();
    
-    categoriasServicios.editar(idCategoria, txtNombre.value)
+     categoriasServices.editar(idCategoria, txtNombre.value)
         .then(respuesta => {
 
             formulario.reset();
