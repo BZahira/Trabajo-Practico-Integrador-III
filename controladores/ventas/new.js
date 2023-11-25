@@ -1,10 +1,10 @@
 import { ventasServicios } from "/servicios/ventas-servicios.js";
 
 
-const htmlAmCategorias = `
+const htmlAmVentas = `
 <div class="card card-dark card-outline">
 
-	<form  class="needs-validation frmAmCategoria"  enctype="multipart/form-data">
+	<form  class="needs-validation frmAmVentas"  enctype="multipart/form-data">
 	
 		<div class="card-header">
                
@@ -43,7 +43,7 @@ const htmlAmCategorias = `
 	
 				<div class="form-group mt-3">
 
-					<a href="#/usuarios" class="btn btn-light border text-left">Cancelar</a>
+					<a href="#/ventas" class="btn btn-light border text-left">Cancelar</a>
 					
 					<button type="submit" class="btn bg-dark float-right">Guardar</button>
 
@@ -60,48 +60,48 @@ const htmlAmCategorias = `
 </div> `;
 var formulario='';
 var txtNombre='';
-var idCategoria;
+var idVenta;
 
 export async function newRegister(){
     let d = document;
     
-    d.querySelector('.contenidoTitulo').innerHTML = 'Agregar Categoria';
+    d.querySelector('.contenidoTitulo').innerHTML = 'Agregar Venta';
    
     crearFormulario();
 
-    formulario = d.querySelector(".frmAmCategoria")
+    formulario = d.querySelector(".frmAmVentas")
     formulario.addEventListener("submit", guardar);
 }
 
 export async function editRegister(id){
     let d = document;
-    idCategoria = id;
-    d.querySelector('.contenidoTitulo').innerHTML = 'Editar Categoria';
+    idVenta = id;
+    d.querySelector('.contenidoTitulo').innerHTML = 'Editar Venta';
    
     crearFormulario();
 
-    formulario = d.querySelector(".frmAmCategoria")
+    formulario = d.querySelector(".frmAmVentas")
     formulario.addEventListener("submit", modificar);
-    let categoria =  await categoriasServicios.listar(id);
+    let ventas =  await ventasServicios.listar(id);
 
     
-    txtNombre.value= categoria.nombre;
+    txtNombre.value= ventas.nombre;
 }
 
 function crearFormulario(){
     let d = document;
-    d.querySelector('.rutaMenu').innerHTML = "Categorias";
-    d.querySelector('.rutaMenu').setAttribute('href',"#/categorias");
+    d.querySelector('.rutaMenu').innerHTML = "Ventas";
+    d.querySelector('.rutaMenu').setAttribute('href',"#/ventas");
 
     let cP =d.getElementById('contenidoPrincipal');
-    cP.innerHTML =  htmlAmCategorias;
+    cP.innerHTML =  htmlAmVentas;
     
     var script = document.createElement( "script" );
     script.type = "text/javascript";
     script.src = '../controladores/validaciones.js';
     cP.appendChild(script);
     
-    txtNombre= d.getElementById('categoriaNombre');
+    txtNombre= d.getElementById('ventasNombre');
 
 
 }
@@ -110,11 +110,11 @@ function guardar(e) {
    
     e.preventDefault();
    
-    categoriasServicios.crear(txtNombre.value)
+    ventasServicios.crear(txtNombre.value)
         .then(respuesta => {
 
             formulario.reset();
-            window.location.href = "#/categorias";
+            window.location.href = "#/ventas";
 
         })
         .catch(error => console.log(error))        
@@ -125,11 +125,11 @@ function modificar(e) {
    
     e.preventDefault();
    
-    categoriasServicios.editar(idCategoria, txtNombre.value)
+    ventasServicios.editar(idVenta, txtNombre.value)
         .then(respuesta => {
 
             formulario.reset();
-            window.location.href = "#/categorias";
+            window.location.href = "#/ventas";
 
         })
         .catch(error => console.log(error))        

@@ -1,6 +1,6 @@
 const url = "https://65529c9e5c69a779032a33ea.mockapi.io/sales";
 
-//API-REST USUARIOS//
+//API-REST VENTAS/
 
 async function listar(id) {
     let cadUrl;
@@ -12,7 +12,7 @@ async function listar(id) {
         .then(respuesta => respuesta.json());
 }
 
-async function crear(nombre) {
+async function crear(idUsuario, emailUsuario, idProducto, nombreProducto, cantidad, fecha, despachado) {
 
     return await fetch(url, {
         method: 'POST',
@@ -20,12 +20,18 @@ async function crear(nombre) {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            nombre: nombre
+            idUsuario: idUsuario, 
+            emailUsuario: emailUsuario, 
+            idProducto: idProducto, 
+            nombreProducto: nombreProducto, 
+            cantidad: cantidad, 
+            fecha: fecha, 
+            despachado: despachado
         })
     })
 }
 
-async function editar(id, nombre) {
+async function editar(id,  despachado) {
 
     let urlPut = url + "/" + id;
     return await fetch(urlPut, {
@@ -34,8 +40,7 @@ async function editar(id, nombre) {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            nombre: nombre
-
+            despachado: despachado
         })
     })
 }
@@ -48,9 +53,18 @@ async function borrar(id){
        })
 }
 
-export const categoriasServicios = {
+async function listarVentasDespachadas(despachadas) {
+    const newUrl= new URL(url);
+    newUrl.searchParams.append('despachado', despachadas);
+    return await fetch(newUrl)
+        .then(respuesta => respuesta.json());
+ 
+}
+
+export const ventasServicios = {
     listar,
     crear,
     editar,
-    borrar
+    borrar,
+    listarVentasDespachadas
 }
