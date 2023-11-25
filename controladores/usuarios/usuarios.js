@@ -37,6 +37,7 @@ export async function Usuarios(){
     let d = document
     let res='';
     d.querySelector('.contenidoTitulo').innerHTML = 'Usuarios';
+    d.querySelector('.contenidoTituloSec').innerHTML = '';
     d.querySelector('.rutaMenu').innerHTML = "Usuarios";
     d.querySelector('.rutaMenu').setAttribute('href',"#/usuarios");
     let cP =d.getElementById('contenidoPrincipal');

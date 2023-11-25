@@ -62,8 +62,9 @@ export function setLogin (){
 async function usuarioExiste() {
 
     let existeUsuario;
-    let nombre;
-    let imagen;
+    let usuarioActivo;
+    let usuarioFoto;
+    let usuarioId;
     const spinner = document.querySelector('#spinner');
 
     await usuariosServices.listar( )
@@ -71,8 +72,9 @@ async function usuarioExiste() {
             respuesta.forEach(usuario => {
                 
                 if (usuario.correo === inputEmail.value && usuario.password === inputPassword.value) {
-                    nombre = usuario.nombre + " " + usuario.apellido
-                    imagen = usuario.avatar
+                    usuarioId = usuario.id;
+                    usuarioActivo = usuario.nombre + ' ' + usuario.apellido;
+                    usuarioFoto = usuario.avatar;
                     return existeUsuario = true;
                 } else {
                     return;
@@ -87,12 +89,14 @@ async function usuarioExiste() {
         //ocultar login
         frmLogin.outerHTML= '';
         document.getElementById("sitio").classList.remove('d-none');
+       
+        //guardar en sessionStorage
+        sessionStorage.setItem('usuarioId', usuarioId);
+        sessionStorage.setItem('usuarioActivo', usuarioActivo);
+        sessionStorage.setItem('usuarioFoto', usuarioFoto);
+
         setUsuarioAutenticado(true); 
         window.location.href = "#/home" ;
-        let name = document.getElementById("nombreUserMenu") 
-        name.innerHTML = nombre
-        let image = document.getElementById("imgUserMenu") 
-        image.src = imagen
     }
 }
 

@@ -11,7 +11,7 @@ async function listar(id) {
         .then(respuesta => respuesta.json());
 }
 
-async function crear(nombre, categoria, descripcion, foto, precio, idCategoria) {
+async function crear(nombre, descripcion, foto, precio, idCategoria, categoria) {
 
     return await fetch(url, {
         method: 'POST',
@@ -20,16 +20,16 @@ async function crear(nombre, categoria, descripcion, foto, precio, idCategoria) 
         },
         body: JSON.stringify({
             nombre: nombre,
-            categoria: categoria,
             descripcion: descripcion,
             foto: foto,
             precio: precio,
-            idCategoria: idCategoria
+            idCategoria: idCategoria,
+            categoria: categoria
         })
     })
 }
 
-async function editar(id, nombre, categoria, descripcion, foto, precio, idCategoria) {
+async function editar(id, nombre, descripcion, foto, precio, idCategoria, categoria) {
 
     let urlPut = url + "/" + id;
     return await fetch(urlPut, {
@@ -39,11 +39,11 @@ async function editar(id, nombre, categoria, descripcion, foto, precio, idCatego
         },
         body: JSON.stringify({
             nombre: nombre,
-            categoria: categoria,
-            descripcion: descripcion,
+            descripcion: descripcion, 
             foto: foto,
             precio: precio,
-            idCategoria: idCategoria
+            idCategoria: idCategoria,
+            categoria: categoria
         })
     })
 }

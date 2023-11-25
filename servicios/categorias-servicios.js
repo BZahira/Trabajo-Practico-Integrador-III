@@ -1,6 +1,5 @@
 const url = "https://65503ff17d203ab6626da4de.mockapi.io/category";
 
-//API-REST USUARIOS//
 
 async function listar(id) {
     let cadUrl;
@@ -12,7 +11,7 @@ async function listar(id) {
         .then(respuesta => respuesta.json());
 }
 
-async function crear(nombre) {
+async function crear(descripcion) {
 
     return await fetch(url, {
         method: 'POST',
@@ -20,12 +19,12 @@ async function crear(nombre) {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            nombre: nombre
+            descripcion: descripcion
         })
     })
 }
 
-async function editar(id, nombre) {
+async function editar(id, descripcion) {
 
     let urlPut = url + "/" + id;
     return await fetch(urlPut, {
@@ -34,8 +33,7 @@ async function editar(id, nombre) {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            nombre: nombre
-
+            descripcion: descripcion
         })
     })
 }
@@ -48,7 +46,7 @@ async function borrar(id){
        })
 }
 
-export const  categoriasServices = {
+export const categoriasServices = {
     listar,
     crear,
     editar,

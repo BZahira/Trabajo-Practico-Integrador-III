@@ -1,4 +1,4 @@
-import {  categoriasServices } from "../../servicios/categorias-servicios.js";
+import { categoriasServices } from "../../servicios/categorias-servicios.js";
 import { newRegister } from "./new.js";
 import { editRegister } from "./new.js";
 
@@ -19,9 +19,9 @@ const htmlCategorias =
    <table id="categoriasTable" class="table table-bordered table-striped tableCategoria" width="100%">
        <thead>
            <tr>
-           <th width="10%"># </th>
-           <th>Nombre</th>
-           <th width="10%">Acciones</th>
+           <th># </th>
+           <th>Categorias</th>
+           <th>Acciones</th>
            </tr>
        </thead>
    
@@ -33,12 +33,13 @@ const htmlCategorias =
 export async function Categorias(){
     let d = document
     let res='';
-    d.querySelector('.contenidoTitulo').innerHTML = 'Categorias';
-    d.querySelector('.rutaMenu').innerHTML = "Categorias";
+    d.querySelector('.contenidoTitulo').innerHTML = 'Categorías';
+    d.querySelector('.contenidoTituloSec').innerHTML = '';
+    d.querySelector('.rutaMenu').innerHTML = "Categorías";
     d.querySelector('.rutaMenu').setAttribute('href',"#/categorias");
     let cP =d.getElementById('contenidoPrincipal');
     
-    res = await  categoriasServices.listar();
+    res = await categoriasServices.listar();
     res.forEach(element => {
       element.action = "<div class='btn-group'><a class='btn btn-warning btn-sm mr-1 rounded-circle btnEditarCategoria'  href='#/editCategoria' data-idCategoria='"+ element.id +"'> <i class='fas fa-pencil-alt'></i></a><a class='btn btn-danger btn-sm rounded-circle removeItem btnBorrarCategoria'href='#/delCategoria' data-idCategoria='"+ element.id +"'><i class='fas fa-trash'></i></a></div>";
     });  
@@ -89,7 +90,7 @@ async function borrar(){
         }
       })
       if (borrar === 1)
-            await  categoriasServices.borrar(id); 
+            await categoriasServices.borrar(id); 
       window.location.href = "#/categorias";  
 }
 
@@ -100,10 +101,10 @@ function llenarTabla(res){
         responsive:true,
         data : res,
         columns: [
-            { data: 'id' },
+            { data: 'id' },    
             { data: 'nombre' },
             { data: 'action', "orderable":false }
-        
+            
         ],
         deferRender: true,
         retrive: true,

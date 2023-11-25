@@ -1,8 +1,8 @@
 import { Categorias } from "./categorias/categorias.js";
+import { Home } from "./home/home.js";
 import { Productos } from "./productos/productos.js";
 import { Usuarios } from "./usuarios/usuarios.js";
 import { Ventas } from "./ventas/ventas.js";
-import { Home } from "./home/home.js";
 
 export function Router(){
     let hash = location.hash;
@@ -22,14 +22,12 @@ export function Router(){
     }else if(hash==='#/categorias'){
         Categorias();
         
+    }else if(( hash==='#/home') || (hash==='') || (hash==='#')){
+        Home();
     }else if(hash==='#/productos'){
         Productos();
     }else if(hash==='#/ventas'){
         Ventas();
-
-    }else if(( hash==='#/home') || (hash==='') || (hash==='#')){
-        Home();
-
-    }
+    }     
     console.log (hash);
 }

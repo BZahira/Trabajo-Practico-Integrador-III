@@ -222,18 +222,15 @@ async function crearFormulario(){
     selCategoria= d.getElementById('productoCategoria');
     
     /*Cargar categorías en select*/
-    try {
-        let categorias = await categoriasServices.listar();
-        categorias.forEach(element => {
-            let opcion = d.createElement('option');
-            opcion.value = element.id;
-            opcion.text = element.descripcion;
-            selCategoria.appendChild(opcion);
-        });
-    } catch (error) {
-        console.error('Error al cargar categorías:', error);
-    }
+    let res = await categoriasServices.listar();
+    res.forEach(element => {
+        let opcion = d.createElement('option');
+        opcion.value = element.id;
+        opcion.text = element.descripcion;
+        selCategoria.appendChild(opcion);        
+    });
 }
+
 function guardar(e) {
    
     e.preventDefault();

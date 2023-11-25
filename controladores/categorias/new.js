@@ -1,4 +1,4 @@
-import {  categoriasServices } from "/servicios/categorias-servicios.js";
+import { categoriasServices } from "/servicios/categorias-servicios.js";
 
 
 const htmlAmCategorias = `
@@ -11,26 +11,28 @@ const htmlAmCategorias = `
 			<div class="col-md-8 offset-md-2">	
                
 				<!--=====================================
-                Nombre
+                Descripcion
                 ======================================-->
 				
 				<div class="form-group mt-5">
 					
-					<label>Nombre</label>
+					<label>Categoría</label>
 
 					<input 
 					type="text" 
 					class="form-control"
-					pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ ]{1,}"
-					onchange="validateJS(event,'text')"
-					name="nombre"
-                    id="categoriaNombre"
+					onchange="validateJS(event,'t&n')"
+					name="descripcion"
+                    id="categoriaDescripcion"
 					required>
 
 					<div class="valid-feedback">Valid.</div>
             		<div class="invalid-feedback">Please fill out this field.</div>
 
 				</div>
+
+				
+
 			
 			</div>
 		
@@ -43,7 +45,7 @@ const htmlAmCategorias = `
 	
 				<div class="form-group mt-3">
 
-					<a href="#/usuarios" class="btn btn-light border text-left">Cancelar</a>
+					<a href="#/categorias" class="btn btn-light border text-left">Cancelar</a>
 					
 					<button type="submit" class="btn bg-dark float-right">Guardar</button>
 
@@ -59,13 +61,15 @@ const htmlAmCategorias = `
 
 </div> `;
 var formulario='';
-var txtNombre='';
+var txtDescripcion='';
+
 var idCategoria;
 
 export async function newRegister(){
     let d = document;
     
-    d.querySelector('.contenidoTitulo').innerHTML = 'Agregar Categoria';
+    d.querySelectorAll('.contenidoTitulo').innerHTML = 'Agregar Categoria';
+    d.querySelector('.contenidoTituloSec').innerHTML += 'Agregar';
    
     crearFormulario();
 
@@ -77,15 +81,16 @@ export async function editRegister(id){
     let d = document;
     idCategoria = id;
     d.querySelector('.contenidoTitulo').innerHTML = 'Editar Categoria';
-   
+    d.querySelector('.contenidoTituloSec').innerHTML += 'Editar';
     crearFormulario();
 
     formulario = d.querySelector(".frmAmCategoria")
     formulario.addEventListener("submit", modificar);
-    let categoria =  await  categoriasServices.listar(id);
+    let categoria =  await categoriasServices.listar(id);
 
     
-    txtNombre.value= categoria.nombre;
+    txtDescripcion.value= categoria.descripcion;
+   
 }
 
 function crearFormulario(){
@@ -101,16 +106,16 @@ function crearFormulario(){
     script.src = '../controladores/validaciones.js';
     cP.appendChild(script);
     
-    txtNombre= d.getElementById('categoriaNombre');
-
+    txtDescripcion= d.getElementById('categoriaDescripcion');
+    
 
 }
 
 function guardar(e) {
    
     e.preventDefault();
-   
-     categoriasServices.crear(txtNombre.value)
+       
+    categoriasServices.crear(txtDescripcion.value)
         .then(respuesta => {
 
             formulario.reset();
@@ -125,7 +130,8 @@ function modificar(e) {
    
     e.preventDefault();
    
-     categoriasServices.editar(idCategoria, txtNombre.value)
+    
+    categoriasServices.editar(idCategoria, txtDescripcion.value )
         .then(respuesta => {
 
             formulario.reset();
