@@ -33,21 +33,25 @@ const htmlProductos =
 </div> `; 
 
 export async function Productos(){
-    let d = document
-    let res='';
+    let d = document;
+    let res = '';
+
+    // Corregir el selector para la clase de la barra de navegación
     d.querySelector('.contenidoTitulo').innerHTML = 'Productos';
-    d.querySelector('.contenidoTituloSec').innerHTML = '';
+    d.querySelector('.contenidoTituloSec').innerHTML = ''; // Puede que quieras añadir un título secundario
     d.querySelector('.rutaMenu').innerHTML = "Productos";
-    d.querySelector('.rutaMenu').setAttribute('href',"#/productos");
-    let cP =d.getElementById('contenidoPrincipal');
-    
+    d.querySelector('.rutaMenu').setAttribute('href', "#/productos");
+
+    // Corregir el id de elemento para el contenido principal
+    let cP = d.getElementById('contenidoPrincipal');
+
     res = await productosServices.listar();
     res.forEach(element => {
-      element.action = "<div class='btn-group'><a class='btn btn-warning btn-sm mr-1 rounded-circle btnEditarProducto'  href='#/editProducto' data-idProducto='"+ element.id +"'> <i class='fas fa-pencil-alt'></i></a><a class='btn btn-danger btn-sm rounded-circle removeItem btnBorrarProducto'href='#/delProducto' data-idProducto='"+ element.id +"'><i class='fas fa-trash'></i></a></div>";
-    });  
-     
-    cP.innerHTML =  htmlProductos;
- 
+        element.action = "<div class='btn-group'><a class='btn btn-warning btn-sm mr-1 rounded-circle btnEditarProducto'  href='#/editProducto' data-idProducto='"+ element.id +"'> <i class='fas fa-pencil-alt'></i></a><a class='btn btn-danger btn-sm rounded-circle removeItem btnBorrarProducto'href='#/delProducto' data-idProducto='"+ element.id +"'><i class='fas fa-trash'></i></a></div>";
+    });
+
+    cP.innerHTML = htmlProductos;
+
     llenarTabla(res);
 
     let btnAgregar = d.querySelector(".btnAgregarProducto");
@@ -55,14 +59,14 @@ export async function Productos(){
     let btnBorrar = d.querySelectorAll(".btnBorrarProducto");
 
     btnAgregar.addEventListener("click", agregar);
-    for(let i=0 ; i< btnEditar.length ; i++){
+    for (let i = 0; i < btnEditar.length; i++) {
         btnEditar[i].addEventListener("click", editar);
         btnBorrar[i].addEventListener("click", borrar);
-    }    
+    }
+} 
 
-}
 
-function agregar(){
+function agregar() {
     newRegister();
 
 }

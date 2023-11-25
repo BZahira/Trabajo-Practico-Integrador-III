@@ -1,33 +1,26 @@
-import { usuariosServices } from "../../servicios/ventas-servicios.js";
-import { newRegister } from "./new.js";
-import { editRegister } from "./new.js";
-
-
+import { ventasServices } from "../../servicios/ventas-servicios.js";
 
 const htmlVentas = 
 `<div class="card">
    <div class="card-header">
    
    <h3 class="card-title"> 
-       <a class="btn bg-dark btn-sm btnAgregarUsuario" href="#/newVenta">Agregar Venta</a>
+      
    </h3>
 
    </div>
 
    <!-- /.card-header -->
    <div class="card-body">            
-   <table id="ventasTable" class="table table-bordered table-striped tableVentas" width="100%">
+   <table id="ventasTable" class="table table-bordered table-striped tableVenta" width="100%">
        <thead>
            <tr>
            <th># </th>
-           <th>idUsuario</th>
-           <th>Correo</th>
-           <th>idProducto</th>
+           <th>Email</th>
            <th>Producto</th>
            <th>Cantidad</th>
            <th>Fecha</th>
            <th>Despachado</th>
-           <th>Acciones</th>
            </tr>
        </thead>
    
@@ -40,84 +33,58 @@ export async function Ventas(){
     let d = document
     let res='';
     d.querySelector('.contenidoTitulo').innerHTML = 'Ventas';
+    d.querySelector('.contenidoTituloSec').innerHTML = '';
     d.querySelector('.rutaMenu').innerHTML = "Ventas";
     d.querySelector('.rutaMenu').setAttribute('href',"#/ventas");
     let cP =d.getElementById('contenidoPrincipal');
     
-    res = await usuariosServices.listar();
+    res = await ventasServices.listar();
+    /*Agrego el check box en la tabla para marcar los pedidos despachados*/
     res.forEach(element => {
-      element.action = "<div class='btn-group'><a class='btn btn-warning btn-sm mr-1 rounded-circle btnEditarVenta'  href='#/editVenta' data-idVenta='"+ element.id +"'> <i class='fas fa-pencil-alt'></i></a><a class='btn btn-danger btn-sm rounded-circle removeItem btnBorrarVenta'href='#/delVenta' data-idVenta='"+ element.id +"'><i class='fas fa-trash'></i></a></div>";
+      let estado = '';
+      if (element.despachado == true) 
+         estado = "checked"; //Estado en HTML para que el check box se muestre con el tilde. 
+      element.action = `<input type="checkbox" class="ckboxDespachado" data-idVenta=${element.id} ${estado} >`;
     });  
      
     cP.innerHTML =  htmlVentas;
  
     llenarTabla(res);
 
-    let btnAgregar = d.querySelector(".btnAgregarVenta");
-    let btnEditar = d.querySelectorAll(".btnEditarVenta");
-    let btnBorrar = d.querySelectorAll(".btnBorrarVenta");
+   
+    let chkBoxDespachado = d.querySelectorAll(".ckboxDespachado");
+    
 
-    btnAgregar.addEventListener("click", agregar);
-    for(let i=0 ; i< btnEditar.length ; i++){
-        btnEditar[i].addEventListener("click", editar);
-        btnBorrar[i].addEventListener("click", borrar);
+    
+    for(let i=0 ; i< chkBoxDespachado.length ; i++){
+        chkBoxDespachado[i].addEventListener("change", chkBoxChange);
+        
       }
 
 }
 
 
-function agregar(){
-    newRegister();
-
-}
-function editar(){
+function chkBoxChange(event){
    let id = this.getAttribute('data-idVenta') ;
-   editRegister(id);
+   let check = event.target.checked;
+   ventasServices.editar(id, check);
     
 }
-
-async function borrar(){
-    let id = this.getAttribute('data-idVenta') ;
-    let borrar=0;
-  await Swal.fire({
-        title: 'Está seguro que desea eliminar el registro?',
-        showDenyButton: true,
-        confirmButtonText: 'Si',
-        denyButtonText: `Cancelar`,
-  
-        focusDeny: true
-      }).then((result) => {
-        /* Read more about isConfirmed, isDenied below */
-        if (result.isConfirmed) {
-           borrar = 1;
-        } else if (result.isDenied) {
-           borrar = 0 ;
-           Swal.fire('Se canceló la eliminación', '', 'info');
-        }
-      })
-      if (borrar === 1)
-            await ventasServices.borrar(id); 
-      window.location.href = "#/ventas";  
-}
-
 
 
 function llenarTabla(res){ 
    
-// Id,  IdUsuario,  EmailUsuario,  IdProducto,  NombreProducto, Cantidad, Fecha, Despachado.//
-    new DataTable('#VentasTable', {
+
+    new DataTable('#ventasTable', {
         responsive:true,
         data : res,
         columns: [
             { data: 'id' },    
-            { data: 'idUsuario' },
             { data: 'emailUsuario' },
-            { data: 'idProducto' },
             { data: 'nombreProducto' },
             { data: 'cantidad' },
             { data: 'fecha' },
-            { data: 'despachado' },
-            
+            { data: 'action', "orderable":false }
             
         ],
         deferRender: true,

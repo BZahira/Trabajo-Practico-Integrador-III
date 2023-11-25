@@ -1,6 +1,5 @@
 const url = "https://65529c9e5c69a779032a33ea.mockapi.io/sales";
 
-//API-REST VENTAS/
 
 async function listar(id) {
     let cadUrl;
@@ -45,14 +44,6 @@ async function editar(id,  despachado) {
     })
 }
 
-async function borrar(id){
-  
-    let urlPut = url + "/" + id;
-    return await fetch(urlPut, {
-            method: 'DELETE'
-       })
-}
-
 async function listarVentasDespachadas(despachadas) {
     const newUrl= new URL(url);
     newUrl.searchParams.append('despachado', despachadas);
@@ -61,7 +52,16 @@ async function listarVentasDespachadas(despachadas) {
  
 }
 
-export const ventasServicios = {
+async function borrar(id){
+  
+    let urlPut = url + "/" + id;
+    return await fetch(urlPut, {
+            method: 'DELETE'
+       })
+}
+
+
+export const ventasServices = {
     listar,
     crear,
     editar,
