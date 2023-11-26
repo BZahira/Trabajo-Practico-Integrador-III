@@ -30,51 +30,63 @@ const htmlVentas =
 </div> `; 
 
 export async function Ventas(){
-    let d = document
-    let res='';
+    // Obtener el documento
+    let d = document;
+
+    // Variable para almacenar el contenido HTML
+    let res = '';
+
+    // Configurar el título y la ruta del menú
     d.querySelector('.contenidoTitulo').innerHTML = 'Ventas';
     d.querySelector('.contenidoTituloSec').innerHTML = '';
     d.querySelector('.rutaMenu').innerHTML = "Ventas";
-    d.querySelector('.rutaMenu').setAttribute('href',"#/ventas");
-    let cP =d.getElementById('contenidoPrincipal');
-    
+    d.querySelector('.rutaMenu').setAttribute('href', "#/ventas");
+
+    // Obtener el contenedor principal
+    let cP = d.getElementById('contenidoPrincipal');
+
+    // Obtener la lista de ventas
     res = await ventasServices.listar();
-    /*Agrego el check box en la tabla para marcar los pedidos despachados*/
+
+    // Agregar el checkbox en la tabla para marcar los pedidos despachados
     res.forEach(element => {
-      let estado = '';
-      if (element.despachado == true) 
-         estado = "checked"; //Estado en HTML para que el check box se muestre con el tilde. 
-      element.action = `<input type="checkbox" class="ckboxDespachado" data-idVenta=${element.id} ${estado} >`;
+        let estado = '';
+        if (element.despachado == true) 
+            estado = "checked"; // Estado en HTML para que el checkbox se muestre con el tilde. 
+        element.action = `<input type="checkbox" class="ckboxDespachado" data-idVenta=${element.id} ${estado} >`;
     });  
-     
+
+    // Asignar el contenido HTML al contenedor principal
     cP.innerHTML =  htmlVentas;
- 
+
+    // Llenar la tabla con los datos de ventas
     llenarTabla(res);
 
-   
+    // Obtener todos los checkboxes de despacho
     let chkBoxDespachado = d.querySelectorAll(".ckboxDespachado");
-    
 
-    
-    for(let i=0 ; i< chkBoxDespachado.length ; i++){
+    // Agregar un evento de cambio a cada checkbox
+    for(let i = 0; i < chkBoxDespachado.length; i++) {
         chkBoxDespachado[i].addEventListener("change", chkBoxChange);
-        
-      }
+    }
 
 }
 
 
 function chkBoxChange(event){
-   let id = this.getAttribute('data-idVenta') ;
-   let check = event.target.checked;
-   ventasServices.editar(id, check);
-    
+    // Obtener el id de la venta desde el elemento actual
+    let id = this.getAttribute('data-idVenta');
+
+    // Obtener el estado del checkbox (marcado o no)
+    let check = event.target.checked;
+
+    // Llamar a la función editar de ventasServices para actualizar el estado de despacho
+    ventasServices.editar(id, check);    
 }
 
 
 function llenarTabla(res){ 
-   
-    console.log(res)
+    
     new DataTable('#ventasTable', {
         responsive:true,
         data : res,

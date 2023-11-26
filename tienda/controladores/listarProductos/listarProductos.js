@@ -54,22 +54,33 @@ async function asignarProducto(id, listaProductos) {
     /*3- EN EL INTERIOR DEL BUCLE DEBERA LLAMAR A LA FUNCION htmlItemProducto y acumular su resultado en una cadena de caracteres */
     /*4- LUEGO DEL BUCLE Y CON LA CADENA RESULTANTE SE DEBE CAPTURAR EL ELEMENTO DEL DOM PARA ASIGNAR ESTOS PRODUCTOS DENTRO DE LA CATEGORIA CORRESPONDIENTE */
     /*5- PARA ELLO PODEMOS HACER USO DE UN SELECTOR CSS QUE SELECCIONE EL ATRIBUTO data-idCategoria=X, Ó LA CLASE .productos  .SIENDO X EL VALOR LA CATEGORIA EN CUESTION.*/ 
+
+    
     try {
+        // Cadena que acumulará el HTML de los productos
         let cad = "";
+        
+        // Consulta los productos por categoría desde el servicio
         let resProd = await productosServices.listarPorCategoria(id);
 
+        // Recorre la lista de productos y construye la cadena HTML
         resProd.forEach(producto => {
             cad += htmlItemProducto(producto.id, producto.foto, producto.nombre, producto.precio);
         });
 
+        // Busca el elemento dentro de listaProductos con el atributo data-idCategoria igual a id y la clase .productos
         let itemProducto = listaProductos.querySelector("[data-idCategoria='" + id + "'] .productos");
 
+        // Verifica si el elemento fue encontrado
         if (itemProducto) {
+            // Asigna la cadena HTML al contenido del elemento
             itemProducto.innerHTML = cad;
         } else {
+            // Muestra un mensaje de error si el elemento no se encuentra
             console.error("El elemento no se encontró en el documento.");
         }
     } catch (error) {
+        // Maneja cualquier error ocurrido durante la ejecución
         console.error("Error al asignar productos:", error);
     }
 }
@@ -82,19 +93,35 @@ export async function listarProductos() {
      /* 4- SE DEBERA ASIGNAR EL RESULTADO DE FUNCION ANTERIOR AL ELEMENTO DEL DOM .seccionProductos */
      /* 5- LUEGO DEBERÁ LLAMAR UNA FUNCION, asignarProducto, QUE RECIBA COMO PARAMETRO EL ID DE LA CATEGORIA  */
      /* 6- FIN DEL BUCLE Y FIN DE LA FUNCION */   
+
+
     try {
+        // Accede al objeto 'document' del navegador
         let d = document;
+    
+        // Variable para almacenar la respuesta de la lista de categorías
         let resCat;
+    
+        // Selecciona el elemento con la clase 'seccionProductos' en el DOM
         let listaProductos = d.querySelector(".seccionProductos");
-
+    
+        // Vacía el contenido de la lista de productos
         listaProductos.innerHTML = "";
+    
+        // Obtiene la lista de categorías desde el servicio
         resCat = await categoriasServices.listar();
-
+    
+        // Recorre la lista de categorías
         for (const element of resCat) {
+            // Agrega el HTML de la categoría al contenido de la lista de productos
             listaProductos.innerHTML += htmlCategoria(element.id, element.nombre);
+    
+            // Asigna productos a la categoría actual
             await asignarProducto(element.id, listaProductos);
         }
     } catch (error) {
+        // Maneja cualquier error ocurrido durante la ejecución
         console.error("Error al listar productos:", error);
     }
+    
 }

@@ -13,33 +13,52 @@ export async function vistaProducto(){
      * 6-El resultado de la función deberá asignarse al elemento .vistaProducto capturado previamente.
      * 7-Se deberá capturar el elemento html correspondiente al anchor btnComprar y enlazar el evento click a la función registrarCompra.  
     */
-   let d = document; 
-   let res; 
-   let carrusel = d.querySelector(".carrusel");
-   let seccionProductos = d.querySelector(".seccionProductos");
-   let vistaProducto = d.querySelector(".vistaProducto");
-   carrusel.innerHTML = "";
-   let seccionLogin = d.querySelector(".seccionLogin");
-   seccionLogin.innerHTML = "";
-   seccionProductos.innerHTML = "";
-   let idProducto = leerParametro();
+    // Accede al objeto 'document' del navegador
+    let d = document; 
 
-   res = await productosServices.listar(idProducto);
-    
-   vistaProducto.innerHTML = htmlVistaProducto(res.id, res.nombre, res.descripcion, res.precio, res.foto);
+    // Variable para almacenar la respuesta del servicio
+    let res; 
 
+    // Selecciona el elemento con la clase 'carrusel' en el DOM
+    let carrusel = d.querySelector(".carrusel");
 
-   let cantidadProducto = d.getElementById("cantidadProducto");
-   let precioProducto = d.getElementById("precioProducto");
+    // Selecciona el elemento con la clase 'seccionProductos' en el DOM
+    let seccionProductos = d.querySelector(".seccionProductos");
 
-   cantidadProducto.addEventListener("input", function() {
-       // Manejador del evento input
-       actualizarPrecio(parseInt(cantidadProducto.value), parseFloat(res.precio), precioProducto);
-   });
+    // Selecciona el elemento con la clase 'vistaProducto' en el DOM
+    let vistaProducto = d.querySelector(".vistaProducto");
 
-   let btnComprar = d.getElementById("btnComprar");
+    // Vacía el contenido de los elementos HTML
+    carrusel.innerHTML = "";
+    let seccionLogin = d.querySelector(".seccionLogin");
+    seccionLogin.innerHTML = "";
+    seccionProductos.innerHTML = "";
 
-   btnComprar.addEventListener("click", registrarCompra);
+    // Obtiene el valor del parámetro 'idProducto' de la URL
+    let idProducto = leerParametro();
+
+    // Obtiene la información del producto desde el servicio
+    res = await productosServices.listar(idProducto);
+
+    // Actualiza la vista del producto con la información obtenida
+    vistaProducto.innerHTML = htmlVistaProducto(res.id, res.nombre, res.descripcion, res.precio, res.foto);
+
+    // Captura los elementos del DOM correspondientes a cantidadProducto y precioProducto
+    let cantidadProducto = d.getElementById("cantidadProducto");
+    let precioProducto = d.getElementById("precioProducto");
+
+    // Agrega un oyente de eventos al elemento cantidadProducto para actualizar el precio en tiempo real
+    cantidadProducto.addEventListener("input", function() {
+        // Manejador del evento input
+        actualizarPrecio(parseInt(cantidadProducto.value), parseFloat(res.precio), precioProducto);
+    });
+
+    // Captura el elemento del DOM correspondiente al botón de comprar
+    let btnComprar = d.getElementById("btnComprar");
+
+    // Agrega un oyente de eventos al botón de comprar para manejar la acción de compra
+    btnComprar.addEventListener("click", registrarCompra);
+
 }
 
 function actualizarPrecio(cantidad, precioUnitario, elementoPrecio) {
@@ -67,7 +86,7 @@ function htmlVistaProducto(id, nombre, descripcion, precio, imagen) {
             <div class="row p-5">
                 <div class="col-lg-8 col-sm-12 my-5  ">
                   <div class="card text-center p-5  d-block">
-                    <img src="${imagen}" alt="producto">
+                    <img src="${imagen}" alt="producto" height="300" width="300">
                     <h2 class="bg-white text-start mt-5 overflow-hidden rounded">Descripción</h2>
                     <hr class="bg-white">
                     <p id="descripcionProducto">${descripcion}</p>
@@ -85,7 +104,7 @@ function htmlVistaProducto(id, nombre, descripcion, precio, imagen) {
                         <div class="d-flex flew-row align-items-center bg-white ">
                         
                             <p class="bg-white me-5 pt-5 text-nowrap">Total</p>
-                            <h2 id="precioProducto" class=" mt-5 bg-white text-start pb-2 overflow-hidden"> ${precio.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })}</>
+                            <h2 id="precioProducto" class=" mt-5 bg-white text-start pb-2 overflow-hidden"> ${precio.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })} </h2>
                         </div>
                         <div class="text-center">
                             <a id="btnComprar" type="button" class="btn btn-primary mt-5" style="width: 100%;">Comprar</a>
@@ -127,21 +146,45 @@ function registrarCompra(){
      * 10-Finalmente emitimos una alerta con la leyenda "Compra finalizada."
      *     
      */
-    let d = document;
-    let session = getUsuarioAutenticado();
+
     
-    if(! session.autenticado) {
+    // Accede al objeto 'document' del navegador
+    let d = document;
+
+    // Obtiene la información de sesión del usuario autenticado
+    let session = getUsuarioAutenticado();
+
+    // Verifica si el usuario está autenticado
+    if (!session.autenticado) {
+        // Muestra una alerta si el usuario no ha iniciado sesión
         alert("Antes de comprar debe iniciar sesión");
+        // Sale de la función
         return;
     }
-    
+
+    // Captura la cantidad de productos seleccionada por el usuario
     let cantidad = d.getElementById("cantidadProducto").value;
+
+    // Obtiene el id del usuario y su dirección de correo electrónico desde la información de sesión
     let idUsuario = session.idUsuario;
     let emailUsuario = session.email;
+
+    // Captura el nombre del producto desde el elemento con id 'nameProducto' en el DOM
     let nameProducto = d.getElementById("nameProducto");
+
+    // Obtiene el id del producto desde el atributo 'data-idproducto' del elemento nameProducto
     let idProducto = nameProducto.getAttribute("data-idproducto");
+
+    // Obtiene la fecha actual
     const fecha = new Date();
-    ventasServices.crear(idUsuario,emailUsuario,idProducto,nameProducto.textContent,cantidad,fecha,0);
+
+    // Llama al servicio de ventas para registrar la compra
+    ventasServices.crear(idUsuario, emailUsuario, idProducto, nameProducto.textContent, cantidad, fecha, 0);
+
+    // Redirige a la página 'tienda.html'
     location.replace("tienda.html");
+
+    // Muestra una alerta indicando que la compra se ha realizado
     alert("Compra realizada");
+
 }

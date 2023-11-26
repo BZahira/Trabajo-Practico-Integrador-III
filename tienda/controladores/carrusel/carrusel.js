@@ -26,9 +26,16 @@ const htmlCarrusel =
 ` 
 
 export async function Carrusel(){
-    let d = document
+    // Accedemos al objeto 'document' del navegador
+    let d = document;
+
+    // Seleccionamos el elemento con la clase 'carrusel' en el DOM
     let seccionCarrusel = d.querySelector(".carrusel");
+
+    // Seleccionamos el elemento con la clase 'seccionLogin' en el DOM y lo vaciamos
     let seccionLogin = d.querySelector(".seccionLogin");
     seccionLogin.innerHTML = "";
+
+    // Asignamos el contenido de la sección 'carrusel' con el código HTML del carrusel
     seccionCarrusel.innerHTML = htmlCarrusel;
 }

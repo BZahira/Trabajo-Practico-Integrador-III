@@ -29,5 +29,5 @@ export function Router(){
     }else if(hash==='#/ventas'){
         Ventas();
     }     
-    console.log (hash);
+
 }

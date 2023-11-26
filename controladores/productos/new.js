@@ -233,36 +233,44 @@ async function crearFormulario(){
 
 function guardar(e) {
    
-    e.preventDefault();
-   
-    var categoria = selCategoria.options[selCategoria.selectedIndex];
-    
-    
-    productosServices.crear(txtNombre.value, txtDescripcion.value, fileFoto.src, txtPrecio.value, 
-        categoria.value, categoria.text )
-        .then(respuesta => {
+	e.preventDefault();
 
-            formulario.reset();
-            window.location.href = "#/productos";
-
-        })
-        .catch(error => console.log(error))        
-
+	// Captura la opción seleccionada en el elemento select con id selCategoria
+	var categoria = selCategoria.options[selCategoria.selectedIndex];
+	
+	// Llama al servicio para crear un nuevo producto con los datos del formulario
+	productosServices.crear(txtNombre.value, txtDescripcion.value, fileFoto.src, txtPrecio.value, 
+	    categoria.value, categoria.text)
+	    .then(respuesta => {
+	
+		  // Reinicia el formulario
+		  formulario.reset();
+	
+		  // Redirige a la página de productos
+		  window.location.href = "#/productos";
+	
+	    })
+	    .catch(error => console.log(error));
 }    
 
 function modificar(e) {
    
-    e.preventDefault();
-   
-    var categoria = selCategoria.options[selCategoria.selectedIndex];
-    productosServices.editar(idProducto, txtNombre.value, txtDescripcion.value, fileFoto.src, txtPrecio.value, 
-        categoria.value, categoria.text)
-        .then(respuesta => {
+	e.preventDefault();
 
-            formulario.reset();
-            window.location.href = "#/productos";
-
-        })
-        .catch(error => console.log(error))        
-
+	// Captura la opción seleccionada en el elemento select con id selCategoria
+	var categoria = selCategoria.options[selCategoria.selectedIndex];
+	
+	// Llama al servicio para editar el producto con los datos del formulario
+	productosServices.editar(idProducto, txtNombre.value, txtDescripcion.value, fileFoto.src, txtPrecio.value, 
+	    categoria.value, categoria.text)
+	    .then(respuesta => {
+	
+		  // Reinicia el formulario
+		  formulario.reset();
+	
+		  // Redirige a la página de productos
+		  window.location.href = "#/productos";
+	
+	    })
+	    .catch(error => console.log(error));     
 }   

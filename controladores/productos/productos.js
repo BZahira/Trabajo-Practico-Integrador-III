@@ -33,32 +33,46 @@ const htmlProductos =
 </div> `; 
 
 export async function Productos(){
-    let d = document
-    let res='';
+    // Captura el elemento document
+    let d = document;
+
+    // Variable para almacenar la respuesta del servicio
+    let res = '';
+
+    // Establece el título, la ruta del menú y el enlace de la ruta para la página de Productos
     d.querySelector('.contenidoTitulo').innerHTML = 'Productos';
     d.querySelector('.contenidoTituloSec').innerHTML = '';
     d.querySelector('.rutaMenu').innerHTML = "Productos";
-    d.querySelector('.rutaMenu').setAttribute('href',"#/productos");
-    let cP =d.getElementById('contenidoPrincipal');
-    
+    d.querySelector('.rutaMenu').setAttribute('href', "#/productos");
+
+    // Captura el contenido principal
+    let cP = d.getElementById('contenidoPrincipal');
+
+    // Obtiene la lista de productos desde el servicio
     res = await productosServices.listar();
+
+    // Agrega acciones (botones de editar y borrar) a cada elemento de la lista de productos
     res.forEach(element => {
-      element.action = "<div class='btn-group'><a class='btn btn-warning btn-sm mr-1 rounded-circle btnEditarProducto'  href='#/editProducto' data-idProducto='"+ element.id +"'> <i class='fas fa-pencil-alt'></i></a><a class='btn btn-danger btn-sm rounded-circle removeItem btnBorrarProducto'href='#/delProducto' data-idProducto='"+ element.id +"'><i class='fas fa-trash'></i></a></div>";
-    });  
-     
+    element.action = "<div class='btn-group'><a class='btn btn-warning btn-sm mr-1 rounded-circle btnEditarProducto'  href='#/editProducto' data-idProducto='" + element.id + "'> <i class='fas fa-pencil-alt'></i></a><a class='btn btn-danger btn-sm rounded-circle removeItem btnBorrarProducto'href='#/delProducto' data-idProducto='" + element.id + "'><i class='fas fa-trash'></i></a></div>";
+    });
+
+    // Asigna el contenido y la estructura HTML para la página de Productos
     cP.innerHTML =  htmlProductos;
- 
+
+    // Llena la tabla con los datos de la lista de productos
     llenarTabla(res);
 
+    // Captura los botones de agregar, editar y borrar
     let btnAgregar = d.querySelector(".btnAgregarProducto");
     let btnEditar = d.querySelectorAll(".btnEditarProducto");
     let btnBorrar = d.querySelectorAll(".btnBorrarProducto");
 
+    // Asigna eventos a los botones de agregar, editar y borrar
     btnAgregar.addEventListener("click", agregar);
-    for(let i=0 ; i< btnEditar.length ; i++){
+    for (let i = 0; i < btnEditar.length; i++) {
         btnEditar[i].addEventListener("click", editar);
         btnBorrar[i].addEventListener("click", borrar);
-    }    
+    }
 
 }
 
@@ -67,33 +81,45 @@ function agregar(){
 
 }
 function editar(){
-   let id = this.getAttribute('data-idProducto') ;
-   editRegister(id);
-    
+    // Captura el valor del atributo data-idProducto del elemento que desencadenó el evento
+    let id = this.getAttribute('data-idProducto');
+
+    // Llama a la función editRegister pasando el id como parámetro
+    editRegister(id);
 }
 
 async function borrar(){
-    let id = this.getAttribute('data-idProducto') ;
-    let borrar=0;
-  await Swal.fire({
+    // Captura el valor del atributo data-idProducto del elemento que desencadenó el evento
+    let id = this.getAttribute('data-idProducto');
+
+    // Variable para determinar si se debe realizar la eliminación o no
+    let borrar = 0;
+
+    // Muestra un cuadro de diálogo de confirmación usando la biblioteca Swal
+    await Swal.fire({
         title: 'Está seguro que desea eliminar el registro?',
         showDenyButton: true,
         confirmButtonText: 'Si',
-        denyButtonText: `Cancelar`,
-  
+        denyButtonText: 'Cancelar',
         focusDeny: true
-      }).then((result) => {
-        /* Read more about isConfirmed, isDenied below */
+    }).then((result) => {
+        // Se ejecuta después de que el usuario responde al cuadro de diálogo
         if (result.isConfirmed) {
-           borrar = 1;
+            borrar = 1;
         } else if (result.isDenied) {
-           borrar = 0 ;
-           Swal.fire('Se canceló la eliminación', '', 'info');
+            borrar = 0;
+            Swal.fire('Se canceló la eliminación', '', 'info');
         }
-      })
-      if (borrar === 1)
-            await productosServices.borrar(id); 
-      window.location.href = "#/productos";  
+    });
+
+    // Verifica si se confirmó la eliminación y realiza la acción correspondiente
+    if (borrar === 1) {
+        await productosServices.borrar(id);
+    }
+
+    // Redirecciona a la página de productos
+    window.location.href = "#/productos";
+
 }
 
 function llenarTabla(res){ 
