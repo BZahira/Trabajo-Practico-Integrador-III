@@ -54,7 +54,7 @@ async function borrar(id){
     return await fetch(urlPut, {
             method: 'DELETE'
        })
-}
+} 
 
 async function listarPorCategoria(idCategoria) {
     const newUrl= new URL(url);

@@ -37,7 +37,7 @@ async function editar(id, descripcion) {
         })
     })
 }
-
+ 
 async function borrar(id){
   
     let urlPut = url + "/" + id;
