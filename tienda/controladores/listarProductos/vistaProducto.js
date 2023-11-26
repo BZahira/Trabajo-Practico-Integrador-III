@@ -104,7 +104,7 @@ function htmlVistaProducto(id, nombre, descripcion, precio, imagen) {
                         <div class="d-flex flew-row align-items-center bg-white ">
                         
                             <p class="bg-white me-5 pt-5 text-nowrap">Total</p>
-                            <h2 id="precioProducto" class=" mt-5 bg-white text-start pb-2 overflow-hidden"> ${precio.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })} </h2>
+                            <h2 id="precioProducto" class=" mt-5 bg-white text-start pb-2 overflow-hidden"> ${parseFloat(precio).toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })} </h2>
                         </div>
                         <div class="text-center">
                             <a id="btnComprar" type="button" class="btn btn-primary mt-5" style="width: 100%;">Comprar</a>

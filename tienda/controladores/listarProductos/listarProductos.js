@@ -35,11 +35,11 @@ function htmlItemProducto(id, imagen, nombre, precio) {
     let cad =
         `
         
-        <div class="card" style="width: 25rem;">
+        <div class="card mt-5" style="width: 25rem;">
         <img src="${imagen}" class="card-img-top " alt="${nombre}" width="200" height="200" >
         <div class="card-body text-center">
             <h5 class="card-title fs-3 text-start">${nombre}</h5>
-            <p class="card-text fs-5 fw-bold my-5 text-start">${precio.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })}</p>
+            <p class="card-text fs-5 fw-bold my-5 text-start">${parseFloat(precio).toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })}</p>
             <a href="?idProducto=${id}#vistaProducto" type="button" class="producto_enlace text-decoration-none">Ver producto</a>
         </div>
         </div>
