@@ -25,7 +25,7 @@ export async function vistaProducto(){
    let idProducto = leerParametro();
 
    res = await productosServices.listar(idProducto);
-
+    
    vistaProducto.innerHTML = htmlVistaProducto(res.id, res.nombre, res.descripcion, res.precio, res.foto);
 
    let btnComprar = d.getElementById("btnComprar");
@@ -45,11 +45,10 @@ function htmlVistaProducto(id, nombre, descripcion, precio, imagen) {
      *   
     */
 
-    let cad =
-            `<div class="imagen">
+    {/* <div class="imagen">
             <img src="${imagen}" alt="producto">
         </div>
-        <div class="texto">
+        <div class="texto text-end">
             <p id="nameProducto" data-idProducto=${id}>${nombre}</p>
         
             <p id="descripcionProducto">${descripcion}</p>
@@ -61,8 +60,45 @@ function htmlVistaProducto(id, nombre, descripcion, precio, imagen) {
                 <input type="number" step="1" min ="1" value="1" id="cantidadProducto">
             </div>
         
-            <a id="btnComprar" >Comprar</a>
-        </div>`;
+            <a id="btnComprar" type="button" >Comprar</a>
+        </div> */}
+
+
+    let cad =
+            `
+            
+            <div class="row p-5">
+                <div class="col-lg-8 col-sm-12 my-5  ">
+                  <div class="card text-center p-5  d-block">
+                    <img src="${imagen}" alt="producto">
+                    <h2 class="bg-white text-start mt-5 overflow-hidden rounded">Descripción</h2>
+                    <hr class="bg-white">
+                    <p id="descripcionProducto">${descripcion}</p>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-sm-12 my-5 ">
+                    <div class="card  d-block  p-5 text-start">
+                        <h1 id="nameProducto" data-idProducto=${id}>${nombre}</h1>
+                        
+                        <label class="mt-5 me-5" for="cantidadProducto">Cantidad:</label>
+                        <div class="input-group">
+                            <input type="number" step="1" min ="1" value="1" id="cantidadProducto" class="form-control me-5" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                        </div>
+                        
+                        <div class="d-flex flew-row align-items-center bg-white ">
+                        
+                            <p class="bg-white me-5 pt-5 text-nowrap">Total</p>
+                            <h2 id="precioProducto" class=" mt-5 bg-white text-start pb-2 overflow-hidden">$ ${precio}</>
+                        </div>
+                        <div class="text-center">
+                            <a id="btnComprar" type="button" class="btn btn-primary mt-5" style="width: 100%;">Comprar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+      
+            
+            `;
     return cad; 
     
 }

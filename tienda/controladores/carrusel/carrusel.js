@@ -1,48 +1,27 @@
 const htmlCarrusel =
 `
 
-<div class="conteCarrousel">
-    <div class="itemCarrousel" id="itemCarrousel-1">
-        <div class="itemCarrouselTarjeta">
-            <img src="/img/slider/imagen1.png" alt="">
+    <div id="carouselExample" class="carousel slide">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+        <img src="/img/slider/imagen1.png" class="d-block w-100" alt="...">
         </div>
-        <div class="itemCarrouselArrows">
-            <a href="#itemCarrousel-3">
-                <i class="fas fa-chevron-left"></i>
-            </a>
-            <a href="#itemCarrousel-2">
-                <i class="fas fa-chevron-right"></i>
-            </a>
+        <div class="carousel-item">
+        <img src="/img/slider/imagen2.png" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+        <img src="/img/slider/imagen3.png" class="d-block w-100" alt="...">
         </div>
     </div>
-    <div class="itemCarrousel" id="itemCarrousel-2">
-        <div class="itemCarrouselTarjeta">
-            <img src="/img/slider/imagen2.png" alt="">
-        </div>
-        <div class="itemCarrouselArrows">
-            <a href="#itemCarrousel-1">
-                <i class="fas fa-chevron-left"></i>
-            </a>
-            <a href="#itemCarrousel-3">
-                <i class="fas fa-chevron-right"></i>
-            </a>
-        </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
     </div>
-    <div class="itemCarrousel" id="itemCarrousel-3">
-        <div class="itemCarrouselTarjeta">
-            <img src="/img/slider/imagen3.png" alt="">
-        </div>
-        <div class="itemCarrouselArrows">
-            <a href="#itemCarrousel-2">
-                <i class="fas fa-chevron-left"></i>
-            </a>
-            <a href="#itemCarrousel-1">
-                <i class="fas fa-chevron-right"></i>
-            </a>
-        </div>
-    </div>
-</div>
-   
 
 ` 
 

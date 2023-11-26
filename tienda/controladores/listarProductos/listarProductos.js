@@ -32,12 +32,17 @@ function htmlItemProducto(id, imagen, nombre, precio) {
     */
     
     let cad =
-        `<div class="item-producto">
-            <img src="${imagen}">
-            <p class="producto_nombre" name="motorola">${nombre}</p>
-            <p class="producto_precio">${precio}</p>
-            <a href="?idProducto=${id}#vistaProducto" type="button" class="producto_enlace">Ver producto</a>
-        </div>`;
+        `
+        
+        <div class="card" style="width: 18rem;">
+        <img src="${imagen}" class="card-img-top" alt="${nombre}">
+        <div class="card-body text-center">
+            <h5 class="card-title fs-3 text-start">${nombre}</h5>
+            <p class="card-text fs-5 fw-bold my-5 text-start">$ ${precio}</p>
+            <a href="?idProducto=${id}#vistaProducto" type="button" class="producto_enlace text-decoration-none">Ver producto</a>
+        </div>
+        </div>
+        `;
 
     return cad;
 }
