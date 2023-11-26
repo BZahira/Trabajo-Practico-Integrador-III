@@ -20,7 +20,7 @@ async function crear(idUsuario, email, idProducto, nombreProducto, cantidad, fec
         },
         body: JSON.stringify({
             idUsuario: idUsuario, 
-            emailUsuario: emailUsuario, 
+            emailUsuario: email, 
             idProducto: idProducto, 
             nombreProducto: nombreProducto, 
             cantidad: cantidad, 

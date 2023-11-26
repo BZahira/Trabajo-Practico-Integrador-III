@@ -74,13 +74,13 @@ function chkBoxChange(event){
 
 function llenarTabla(res){ 
    
-
+    console.log(res)
     new DataTable('#ventasTable', {
         responsive:true,
         data : res,
         columns: [
             { data: 'id' },    
-            { data: 'email' },
+            { data: 'emailUsuario' },
             { data: 'nombreProducto' },
             { data: 'cantidad' },
             { data: 'fecha' },
