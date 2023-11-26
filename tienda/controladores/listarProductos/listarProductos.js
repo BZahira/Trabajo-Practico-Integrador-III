@@ -9,7 +9,8 @@ function htmlCategoria(id, categoria) {
     /*POR ULTIMO, LA FUNCION DEVOLVERA LA CADENA RESULTANTE*/   
     let cad =
         `<div class="categorias" data-idCategoria="${id}">
-            <h1 class="categoria">${categoria}</h1>
+            <h1 class="categoria mt-5">${categoria}</h1>
+            <hr class="mb-5">
             <div class="productos">
                 <!-- Acá listan los productos-->
                 <p class="item-producto">Sin productos.</p>
@@ -34,11 +35,11 @@ function htmlItemProducto(id, imagen, nombre, precio) {
     let cad =
         `
         
-        <div class="card" style="width: 18rem;">
-        <img src="${imagen}" class="card-img-top" alt="${nombre}">
+        <div class="card" style="width: 25rem;">
+        <img src="${imagen}" class="card-img-top " alt="${nombre}" width="200" height="200" >
         <div class="card-body text-center">
             <h5 class="card-title fs-3 text-start">${nombre}</h5>
-            <p class="card-text fs-5 fw-bold my-5 text-start">$ ${precio}</p>
+            <p class="card-text fs-5 fw-bold my-5 text-start">${precio.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })}</p>
             <a href="?idProducto=${id}#vistaProducto" type="button" class="producto_enlace text-decoration-none">Ver producto</a>
         </div>
         </div>

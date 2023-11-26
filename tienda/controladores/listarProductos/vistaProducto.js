@@ -28,10 +28,26 @@ export async function vistaProducto(){
     
    vistaProducto.innerHTML = htmlVistaProducto(res.id, res.nombre, res.descripcion, res.precio, res.foto);
 
+
+   let cantidadProducto = d.getElementById("cantidadProducto");
+   let precioProducto = d.getElementById("precioProducto");
+
+   cantidadProducto.addEventListener("input", function() {
+       // Manejador del evento input
+       actualizarPrecio(parseInt(cantidadProducto.value), parseFloat(res.precio), precioProducto);
+   });
+
    let btnComprar = d.getElementById("btnComprar");
 
    btnComprar.addEventListener("click", registrarCompra);
 }
+
+function actualizarPrecio(cantidad, precioUnitario, elementoPrecio) {
+    // Calcula el nuevo precio y actualiza el elemento en el DOM
+    const nuevoPrecio = cantidad * precioUnitario;
+    elementoPrecio.textContent = `${nuevoPrecio.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })}`;
+}
+
 
 function htmlVistaProducto(id, nombre, descripcion, precio, imagen) {
     /**1- ESTA FUNCION RECIBE COMO PARAMETRO los siguiente datos id, nombre, descripcion, precio e imagen del producto */
@@ -44,25 +60,6 @@ function htmlVistaProducto(id, nombre, descripcion, precio, imagen) {
      *   let cadena = `Hola, ${titulo} Claudia  en que podemos ayudarla`;
      *   
     */
-
-    {/* <div class="imagen">
-            <img src="${imagen}" alt="producto">
-        </div>
-        <div class="texto text-end">
-            <p id="nameProducto" data-idProducto=${id}>${nombre}</p>
-        
-            <p id="descripcionProducto">${descripcion}</p>
-        
-            <p id="precioProducto">${precio}</p>
-        
-            <div class="form-group">
-                <label for="cantidadProducto">Cantidad</label>
-                <input type="number" step="1" min ="1" value="1" id="cantidadProducto">
-            </div>
-        
-            <a id="btnComprar" type="button" >Comprar</a>
-        </div> */}
-
 
     let cad =
             `
@@ -82,13 +79,13 @@ function htmlVistaProducto(id, nombre, descripcion, precio, imagen) {
                         
                         <label class="mt-5 me-5" for="cantidadProducto">Cantidad:</label>
                         <div class="input-group">
-                            <input type="number" step="1" min ="1" value="1" id="cantidadProducto" class="form-control me-5" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                            <input type="number" step="1" min ="1" value="1" id="cantidadProducto" class="form-control me-5" placeholder="Username" aria-describedby="basic-addon1">
                         </div>
                         
                         <div class="d-flex flew-row align-items-center bg-white ">
                         
                             <p class="bg-white me-5 pt-5 text-nowrap">Total</p>
-                            <h2 id="precioProducto" class=" mt-5 bg-white text-start pb-2 overflow-hidden">$ ${precio}</>
+                            <h2 id="precioProducto" class=" mt-5 bg-white text-start pb-2 overflow-hidden"> ${precio.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })}</>
                         </div>
                         <div class="text-center">
                             <a id="btnComprar" type="button" class="btn btn-primary mt-5" style="width: 100%;">Comprar</a>
